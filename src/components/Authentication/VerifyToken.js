@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import $ from 'jquery';
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { verifyUser } from "../../actions";
+import { activateUser } from "../../actions";
 import logo from '../../assests/images/logo.png'
 function VerifyToken(props) {
   const [token, setToken] = useState("");
@@ -20,7 +20,7 @@ function VerifyToken(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.verifyUser({ activationCode: token }, props.history);
+    props.activateUser({ activationCode: token }, props.history);
   };
 
   return (
@@ -146,6 +146,6 @@ function VerifyToken(props) {
 const mapStateToProps = (state) => ({
   errors: state.errors,
 });
-export default connect(mapStateToProps, { verifyUser })(
+export default connect(mapStateToProps, { activateUser })(
   withRouter(VerifyToken)
 );

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import $ from "jquery";
 import moment from "moment";
-import { Link } from "react-router-dom";
-import logo from "../../assests/images/logo.png";
 import { connect } from "react-redux";
-import { getTransations, logout } from "../../actions";
+import { Link } from "react-router-dom";
+import logo from "../assests/images/logo.png";
+import { fetchTrans, logout } from "../actions";
 
-const AdminBoard = (props) => {
+const Transactions = (props) => {
   const [show, setShow] = useState(false);
   const [profile, setProfile] = useState({});
   const [activities, setActivities] = useState([]);
@@ -15,15 +15,15 @@ const AdminBoard = (props) => {
     //  Preloader
     $("#preloader").fadeOut(500);
     $("#main-wrapper").addClass("show");
-    props.getTransations();
+    props.fetchTrans(props.user._id);
   }, []);
 
   useEffect(() => {
-    setProfile(props.admin);
+    setProfile(props.user);
     setActivities(props.transactions);
   }, [props]);
   const replaceFirst5 = (str) => {
-      console.log(str, 'string')
+    console.log(str, "string");
     return str.replace(/^.{1,5}/, (m) => "*".repeat(m.length + 3));
   };
   const handleMenu = () => {
@@ -64,7 +64,7 @@ const AdminBoard = (props) => {
                             <i className="mdi mdi-account"></i>
                           </span>
                           <span className="name">
-                            Howdy, {props.admin?.username}
+                            Howdy, {props.user?.username}
                           </span>
                           <span className="arrow">
                             <i className="la la-angle-down"></i>
@@ -90,26 +90,35 @@ const AdminBoard = (props) => {
         </div>
 
         <div className="sidebar">
-          <Link className="brand-logo" to="/">
+          <a className="brand-logo" href="index.html">
             <img src={logo} alt="" />
-            <span>ACBC </span>
-          </Link>
+            <span>Treemium </span>
+          </a>
           <div className="menu">
             <ul>
               <li>
-                <Link to="/admin/dashboard">
+                <Link to="/user/dashboard">
                   <span>
                     <i className="mdi mdi-view-dashboard"></i>
                   </span>
                   <span className="nav-text">Home</span>
                 </Link>
               </li>
+            
               <li>
-                <Link to="/admin/clients">
+                <Link to={`/user/${props.user.username}/transactions`}>
                   <span>
-                    <i className="mdi mdi-repeat"></i>
+                    <i className="mdi mdi-account"></i>
                   </span>
-                  <span className="nav-text">Clients</span>
+                  <span className="nav-text">Account</span>
+                </Link>
+              </li>
+              <li>
+                <Link to={`/user/${props.user._id}`}>
+                  <span>
+                    <i className="mdi mdi-settings"></i>
+                  </span>
+                  <span className="nav-text">Setting</span>
                 </Link>
               </li>
             </ul>
@@ -195,53 +204,56 @@ const AdminBoard = (props) => {
                         <table className="table mb-0 table-responsive-sm">
                           <tbody>
                             {activities.length > 0 &&
-                              activities.map(
-                                (
-                                  {
-                                    transactionType,
-                                    amount,
-                                    referenceNo,
-                                    createdAt,
-                                  },
-                                  index
-                                ) => (
-                                  <tr key={index}>
-                                    <td>
-                                      <span
-                                        className={
-                                          transactionType === "credit"
-                                            ? "buy-thumb"
-                                            : "sold-thumb"
-                                        }>
-                                        <i
+                              activities
+                                .slice(0, 5)
+                                .map(
+                                  (
+                                    {
+                                      transactionType,
+                                      amount,
+                                      referenceNo,
+                                      createdAt,
+                                    },
+                                    index
+                                  ) => (
+                                    <tr key={index}>
+                                      <td>
+                                        <span
                                           className={
                                             transactionType === "credit"
-                                              ? "la la-arrow-up"
-                                              : "la la-arrow-down"
-                                          }></i>
-                                      </span>
-                                    </td>
-                                    <td>
-                                      <i className="cc BTC"></i>{" "}
-                                      {transactionType.toUpperCase()}
-                                    </td>
-                                    <td>
-                                      Using - Bank {replaceFirst5(referenceNo)}
-                                    </td>
-                                    <td
-                                      className={
-                                        transactionType === "credit"
-                                          ? "text-success"
-                                          : "text-danger"
-                                      }>
-                                      {moment(createdAt).format(
-                                        "DD MMM, YY h:mm A"
-                                      )}
-                                    </td>
-                                    <td>{amount}</td>
-                                  </tr>
-                                )
-                              )}
+                                              ? "buy-thumb"
+                                              : "sold-thumb"
+                                          }>
+                                          <i
+                                            className={
+                                              transactionType === "credit"
+                                                ? "la la-arrow-up"
+                                                : "la la-arrow-down"
+                                            }></i>
+                                        </span>
+                                      </td>
+                                      <td>
+                                        <i className="cc BTC"></i>{" "}
+                                        {transactionType.toUpperCase()}
+                                      </td>
+                                      <td>
+                                        Using - Bank{" "}
+                                        {replaceFirst5(referenceNo)}
+                                      </td>
+                                      <td
+                                        className={
+                                          transactionType === "credit"
+                                            ? "text-success"
+                                            : "text-danger"
+                                        }>
+                                        {moment(createdAt).format(
+                                          "DD MMM, YY h:mm A"
+                                        )}
+                                      </td>
+                                      <td>{amount}</td>
+                                    </tr>
+                                  )
+                                )}
                           </tbody>
                         </table>
                       </div>
@@ -258,9 +270,9 @@ const AdminBoard = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  const admin = state.setCurrentUser.user.user;
+  const {user} = state.setCurrentUser.user;
   const { transactions } = state.transactions;
-  return { admin, transactions };
+  return { user, transactions };
 };
 
-export default connect(mapStateToProps, { getTransations, logout })(AdminBoard);
+export default connect(mapStateToProps, { fetchTrans, logout })(Transactions);

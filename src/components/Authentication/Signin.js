@@ -55,11 +55,11 @@ function Signin(props) {
         props.history.push("/user/dashboard");
       })
       .catch((err) => {
+        if(err.response.request.status === 401 ) {props.history.push("/verify-token")}
         swal({
           title: err.response.data.message,
           icon: "warning",
         });
-        return err
       });
   };
   return (

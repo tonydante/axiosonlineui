@@ -1,6 +1,8 @@
 import React, {useEffect}from 'react';
 import {Link} from 'react-router-dom'
-import $ from 'jquery'
+import $ from 'jquery';
+import logo from "../assests/images/logo.png";
+
 function Home() {
    useEffect(() => {
      //  Preloader
@@ -24,8 +26,8 @@ function Home() {
                 <div className="col-xl-12 position-relative">
                   <nav className="navbar navbar-expand-lg navbar-light px-0">
                     <a className="navbar-brand" href="landing.html">
-                      <img src="./images/logo.png" alt="" />
-                      <span>Treemium </span>
+                      <img src={logo} alt="" />
+                      <span>Axos Online</span>
                     </a>
                     <button
                       className="navbar-toggler"
@@ -69,12 +71,15 @@ function Home() {
                 <div className="col-xl-12 col-md-12">
                   <div className="intro-content">
                     <h2>
-                      Buy and sell <br />
-                      Treemium ocurrency
+                      Get Paid Faster <br />
+                      Than Your Coworkers
                     </h2>
                     <p>
-                      Fast and secure way to purchase or exchange 150+ Treemium
-                      ocurrencies
+                      With Essential Checking Get your paycheck up to two days
+                      early* with Essential Checking – the no-fee checking
+                      account. Pay bills. Slash debt. Or add funds to your
+                      savings account early so you can squirrel away more
+                      interest earnings.
                     </p>
                   </div>
                 </div>
@@ -89,67 +94,18 @@ function Home() {
                 <div className="col-xl-7">
                   <div className="section_heading">
                     <span>Explore</span>
-                    <h3>The World's Leading Treemium ocurrency Exchange</h3>
+                    <h3>Real value. Real bankers.</h3>
                     <p>
-                      Trade Bitcoin, ETH, and hundreds of other Treemium
-                      ocurrencies in minutes.
+                      An online bank with a history you can trust. Offering
+                      great rates and low fees is only part of what Bank5
+                      Connect is all about. As one of America’s top-rated online
+                      banks, we’ve been delivering exceptional value to our
+                      customers since Bank5 Connect was created in 2013. But
+                      we’ve been in the banking business much longer than that.
+                      Bank5 Connect is an online division of BankFive, a trusted
+                      community bank based in Massachusetts that’s been serving
+                      customers since 1855.
                     </p>
-                  </div>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-xl-12">
-                  <div className="card">
-                    <div className="card-body">
-                      <div className="market-table">
-                        <div className="table-responsive">
-                          <table className="table mb-0 table-responsive-sm">
-                            <thead>
-                              <tr>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th>Price</th>
-                                <th>Change</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td>
-                                  <span>1</span>
-                                </td>
-                                <td className="coin_icon">
-                                  <i className="fab fa-btc"></i>
-                                  <span>
-                                    Bitcoin <b>BTC</b>
-                                  </span>
-                                </td>
-
-                                <td>USD 680,175.06</td>
-                                <td>
-                                  <span className="text-success">+1.13%</span>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <span>2</span>
-                                </td>
-                                <td className="coin_icon">
-                                  <i className="fab fa-ethereum"></i>
-                                  <span>
-                                    Ethereum <b>ETH</b>
-                                  </span>
-                                </td>
-
-                                <td>USD 680,175.06</td>
-                                <td>
-                                  <span className="text-success">+1.13%</span>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -160,9 +116,9 @@ function Home() {
               <div className="row py-lg-5 justify-content-center">
                 <div className="col-xl-7">
                   <div className="section_heading">
-                    <span>Features</span>
-                    <h3>The most trusted Treemium ocurrency platform</h3>
-                    <p>Here are a few reasons why you should choose Coinbase</p>
+                    <span>Helpful Banking Features</span>
+                    {/* <h3>The most trusted Treemium ocurrency platform</h3>
+                    <p>Here are a few reasons why you should choose Coinbase</p> */}
                   </div>
                 </div>
               </div>
@@ -172,14 +128,12 @@ function Home() {
                     <span>
                       <i className="fa fa-shield"></i>
                     </span>
-                    <h4>Secure storage</h4>
+                    <h4>Invite Friends</h4>
                     <p>
-                      We store the vast majority of the digital assets in secure
-                      offline storage.
+                      Help a friend bank smarter with little to no fees, high
+                      savings rates, and a simple banking app to fit their busy
+                      lifestyle.
                     </p>
-                    <a href="#">
-                      Learn more <i className="la la-angle-right"></i>
-                    </a>
                   </div>
                 </div>
                 <div className="col-md-4">
@@ -187,14 +141,12 @@ function Home() {
                     <span>
                       <i className="fa fa-cubes"></i>
                     </span>
-                    <h4>Protected by insurance</h4>
+                    <h4>Automate Your Bills</h4>
                     <p>
-                      Treemium ocurrency stored on our servers is covered by our
-                      insurance policy.
+                      Never miss a bill payment again. With Bill Pay, you can
+                      truly “set it and forget it” by auto-paying bills directly
+                      from your account.
                     </p>
-                    <a href="#">
-                      Learn more <i className="la la-angle-right"></i>
-                    </a>
                   </div>
                 </div>
                 <div className="col-md-4">
@@ -202,14 +154,12 @@ function Home() {
                     <span>
                       <i className="fa fa-life-ring"></i>
                     </span>
-                    <h4>Industry best practices</h4>
+                    <h4>Peer-to-Peer Payments</h4>
                     <p>
-                      Treemium supports a variety of the most popular digital
-                      currencies.
+                      Pay your friends directly from your account. All you need
+                      is their mobile number or email. It’s fast, easy, and
+                      secure.
                     </p>
-                    <a href="#">
-                      Learn more <i className="la la-angle-right"></i>
-                    </a>
                   </div>
                 </div>
               </div>
@@ -304,22 +254,7 @@ function Home() {
                     <a href="term-condition.html">Term & Service</a>
                   </div>
                 </div>
-                <div className="col-xl-6 col-md-6 text-lg-right text-center">
-                  <div className="social">
-                    <a href="#">
-                      <i className="fa fa-youtube-play"></i>
-                    </a>
-                    <a href="#">
-                      <i className="fa fa-instagram"></i>
-                    </a>
-                    <a href="#">
-                      <i className="fa fa-twitter"></i>
-                    </a>
-                    <a href="#">
-                      <i className="fa fa-facebook"></i>
-                    </a>
-                  </div>
-                </div>
+                <div className="col-xl-6 col-md-6 text-lg-right text-center"></div>
               </div>
               <div className="row align-items-center">
                 <div className="col-xl-12 text-center text-lg-right">
@@ -329,18 +264,6 @@ function Home() {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div className="cookie_alert">
-          <div className="alert alert-light fade show">
-            <p>
-              We use cookies to enhance your experience. By using Treemium , you
-              agree to our <a href="#">Terms of Use</a> and{" "}
-              <a href="#">Privacy Policy</a>
-            </p>
-            <button className="btn btn-success btn-block" data-dismiss="alert">
-              Accept
-            </button>
           </div>
         </div>
       </>

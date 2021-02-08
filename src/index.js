@@ -8,9 +8,7 @@ import { setCurrentUser } from "./actions";
 import setAuthToken from "./utils/SetAuthToken";
 import rootReducer from "./reducers";
 import "./assests/js/scripts";
-import "./assests/icons/cryptocoins/css/cryptocoins-colors.css";
 import "./assests/css/style.css";
-// import "./assests/icons/line-awesome/css/line-awesome.min.css";
 // import "./index.scss";
 import App from "./App";
 

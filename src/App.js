@@ -13,9 +13,15 @@ import VerifyStepTwo from "./components/VerifyStepTwo";
 import VerifyStepThree from "./components/VerifyStepThree";
 import VerifyStepFour from "./components/VerifyStepFour";
 import Accounts from "./components/Accounts";
+import Transactions from "./components/Transactions";
+import User from "./components/User";
+import COT from "./components/COT";
+import Tax from "./components/Tax";
 import Home from "./components/Home";
 import AdminBoard from "./components/Admin/AdminBoard";
 import Clients from "./components/Admin/Clients";
+import Client from "./components/Admin/Client";
+import Transfer from "./components/Admin/Transfer";
 // import Dashboard from "./components/Dashboard";
 // import Slot from "./components/Slots";
 // import AdminDashboard from "./components/Admin/Dashboard";
@@ -45,6 +51,20 @@ const App = (props) => {
               exact
               path="/admin/clients"
               component={Clients}
+            />
+            <PrivateRoute
+              role={props.role}
+              requiredRoles={["admin"]}
+              exact
+              path="/admin/clients/:id"
+              component={Client}
+            />
+            <PrivateRoute
+              role={props.role}
+              requiredRoles={["admin"]}
+              exact
+              path="/admin/transfer/:id"
+              component={Transfer}
             />
             <PrivateRoute
               role={props.role}
@@ -81,6 +101,35 @@ const App = (props) => {
               path="/user/dashboard"
               component={Accounts}
             />
+            <PrivateRoute
+              role={props.role}
+              requiredRoles={["user"]}
+              exact
+              path="/user/:name/transactions"
+              component={Transactions}
+            />
+            <PrivateRoute
+              role={props.role}
+              requiredRoles={["user"]}
+              exact
+              path="/user/cot"
+              component={COT}
+            />
+            <PrivateRoute
+              role={props.role}
+              requiredRoles={["user"]}
+              exact
+              path="/user/tax"
+              component={Tax}
+            />
+            <PrivateRoute
+              role={props.role}
+              requiredRoles={["user"]}
+              exact
+              path="/user/:id"
+              component={User}
+            />
+
             {/* <PrivateRoute
               role={this.props.role}
               requiredRoles={["user"]}
@@ -96,7 +145,7 @@ const App = (props) => {
               component={Slot}
             /> */}
           </Switch>
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" component={CheckLoggedInUser(Home)} />
           <Route exact path="/signin" component={CheckLoggedInUser(Signin)} />
           <Route exact path="/signup" component={CheckLoggedInUser(Signup)} />
           <Route

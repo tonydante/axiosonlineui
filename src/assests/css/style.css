@@ -9409,6 +9409,10 @@ button,
   display: flex;
   align-items: center;
   font-weight: 500; }
+.linked_account li .verify .verified div,
+.linked_account li .verify .not-verify div {
+    cursor: pointer;
+   }
   .linked_account li .verify .verified span,
   .linked_account li .verify .not-verify span {
     background: #10d876;

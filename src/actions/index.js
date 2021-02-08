@@ -4,20 +4,22 @@ import swal from 'sweetalert';
 import setAuthToken from '../utils/SetAuthToken';
 import {
   USER_AUTHENTICATED,
-  CREATE_SLOT_SUCCESS,
+  UPDATE_USER_ERROR,
   USER_SIGNUP_ERRORS,
   GET_USERS_SUCCESS,
   GET_USERS_ERROR,
-  ACTIVATE_SUCCESS,
+  VERIFY_SUCCESS,
+  VERIFY_ERROR,
   ACTIVATE_ERRORS,
-  CREATE_SLOT_FAIL,
-  GET_ALL_WISHES_SUCCESS,
-  GET_ALL_WISHES_ERROR,
-  GET_ALL_PENDING_WISHES_SUCCESS,
-  GET_ALL_PENDING_WISHES_ERROR,
-  GET_ALL_FULFILLED_WISHES_SUCCESS,
-  GET_ALL_FULFILLED_WISHES_ERROR,
+  GET_USER_SUCCESS,
+  GET_USER_ERROR,
+  TRANSFER_ERROR,
   SIGN_UP_USER_ERROR,
+  GET_TRANS_SUCCESS,
+  GET_TRANS_ERROR,
+  GET_USER_TRANS_SUCCESS,
+  GET_USER_TRANS_ERROR,
+  WITHDRAW_ERROR,
 } from "./constants";
 
 // const API = 'https://creditdeliveries.herokuapp.com';
@@ -100,7 +102,7 @@ const setLocalStore = (key, token) => window.localStorage.setItem(key, token);
      });
  };
 
-export function verifyUser(activationCode, history) {
+export function activateUser(activationCode, history) {
   return (dispatch) =>
     axios
       .patch(`${API}/v1/activate`, activationCode)
@@ -112,11 +114,31 @@ export function verifyUser(activationCode, history) {
       .catch((err) => {
         dispatch({
           type: ACTIVATE_ERRORS,
-          payload: err,
+          payload: err.response.data,
         });
       });
 }
 
+const verifyUserSuccess = (user) => ({
+  type: VERIFY_SUCCESS,
+  payload: user,
+});
+
+const verifyUserError = (data) => ({ type: VERIFY_ERROR, payload: data });
+
+export function verifyUser(userData) {
+  return (dispatch) =>
+    axios
+      .patch(`${API}/v1/admin/users/verify`, userData)
+      .then(({ data }) => {
+        console.log(data, 'response')
+        dispatch(verifyUserSuccess(data.updatedUser));
+      })
+      .catch((err) => {
+        console.log(err, 'error')
+        dispatch(verifyUserError(err.response.data));
+      });
+}
 
 
 
@@ -143,83 +165,111 @@ export const getAllUsers = () => dispatch => {
 }
 
 
+/**
+ *
+ * @desc this function returns a users details
+ * @param {any} token
+ * @returns {void}
+ */
+const getUserSuccess = user =>
+  ({ type: GET_USER_SUCCESS, payload: user });
 
-const getAllWishesSuccess = allWishes =>
-  ({ type: GET_ALL_WISHES_SUCCESS, payload: allWishes });
+const getUserError = data =>
+  ({ type: GET_USER_ERROR, payload: data });
 
-const getAllWishesFailed = allWishes =>
-  ({ type: GET_ALL_WISHES_ERROR, payload: allWishes });
+export const getAUser = id => dispatch => {
+  axios.get(`${API}/v1/user/${id}`)
+    .then((response) => {
+      console.log(response, 'res')
+      dispatch(getUserSuccess(response.data.user));
+    })
+    .catch((error) => {
+      dispatch(getUserError(error.response.data));
+    });
+}
+
+
+ const updateUserError = (data) => ({ type: UPDATE_USER_ERROR, data });
+
+ export function updateUser(id, obj, history) {
+   return (dispatch) =>
+     axios
+       .patch(`${API}/v1/users/${id}`, obj)
+       .then(() => {
+         history.push(`/admin/clients/${id}`)
+        })
+       .catch((error) => {
+         dispatch(updateUserError(error.response.data));
+       });
+ }
+
+ const transferError = (data) => ({ type: TRANSFER_ERROR, data });
+
+ export function transfer(id, obj, history) {
+   return (dispatch) =>
+     axios
+       .post(`${API}/v1/admin/transfer`, obj)
+       .then((res) => {
+         history.push(`/admin/transfer/${id}`);
+       })
+       .catch((error) => {
+         dispatch(transferError(error.response.data));
+       });
+ }
+
+ const withdrawError = (data) => ({ type: WITHDRAW_ERROR, data });
+
+ export function withdraw(obj, history) {
+   return (dispatch) =>
+     axios
+       .post(`${API}/v1/user/withdraw`, obj)
+       .then((res) => {
+         history.push("/user/dashboard");
+       })
+       .catch((error) => {
+         dispatch(withdrawError(error.response.data));
+       });
+ }
+
+const getTransSuccess = (data) => ({ type: GET_TRANS_SUCCESS, payload: data });
+
+const getTransError = (data) => ({ type: GET_TRANS_ERROR, payload: data });
+
+export const getTransations = () => (dispatch) => {
+  axios
+    .get(`${API}/v1/admin/transactions`)
+    .then((response) => {
+      dispatch(getTransSuccess(response.data.transactions.transactions));
+    })
+    .catch((error) => {
+      dispatch(getTransError(error.response.data));
+    });
+};
+
+
 
 /**
- * @function getAllWishes
  *
- * @param { number } page
- *
- * @returns {object} dispatches an action
- *
- * @description It gets all the existing bills
+ * @desc this function returns list of transactions for a user
+ * @param {any} token
+ * @returns {void}
  */
-export const getAllWishes = () =>
-  dispatch => axios.get(`${API}/v1/wishes`)
+const fetchTransSuccess = transaction =>
+  ({ type: GET_USER_TRANS_SUCCESS, payload: transaction });
+
+const fetchTransError = data =>
+  ({ type: GET_USER_TRANS_ERROR, payload: data });
+
+export const fetchTrans = id => dispatch => {
+  axios.get(`${API}/v1/users/${id}/transactions`)
     .then((response) => {
-      // return console.log(response)
-      dispatch(getAllWishesSuccess(response.data));
+      dispatch(fetchTransSuccess(response.data.transactions.transactions));
     })
-    .catch((err) => {
-      // return console.log(err, 'error is here')
-      dispatch(getAllWishesFailed(err.data.message));
+    .catch((error) => {
+      console.log(error)
+      dispatch(fetchTransError(error.response.data));
     });
-
-const getAllPendingSuccess = allPendingWishes =>
-  ({ type: GET_ALL_PENDING_WISHES_SUCCESS, payload: allPendingWishes });
-
-const getAllPendingFailed = allPendingWishes =>
-  ({ type: GET_ALL_PENDING_WISHES_ERROR, payload: allPendingWishes });
-
-/**
- * @function getAllPendingWishes
- *
- * @param { number } page
- *
- * @returns {object} dispatches an action
- *
- * @description It gets all the existing bills
- */
-export const getAllPendingWishes = (id) =>
-  dispatch => axios.get(`${API}/v1/wishes?status=pending&userId=${id}`)
-    .then((response) => {
-      dispatch(getAllPendingSuccess(response.data));
-    })
-    .catch((err) => {
-      dispatch(getAllPendingFailed(err));
-    });
-
-
-const getAllFulfilledSuccess = allFulfilledWishes =>
-  ({ type: GET_ALL_FULFILLED_WISHES_SUCCESS, payload: allFulfilledWishes });
-
-const getAllFulfilledFailed = allFulfilledWishes =>
-  ({ type: GET_ALL_FULFILLED_WISHES_ERROR, payload: allFulfilledWishes });
-
-/**
- * @function getAllFulfilledWishes
- *
- * @param { number } page
- *
- * @returns {object} dispatches an action
- *
- * @description It gets all the existing bills
- */
-export const getAllFulfilledWishes = (id) =>
-  dispatch => axios.get(`${API}/v1/wishes?status=fulfilled&userId=${id}`)
-    .then((response) => {
-      dispatch(getAllFulfilledSuccess(response.data));
-    })
-    .catch((err) => {
-      // return console.log(err, 'error is here')
-      dispatch(getAllFulfilledFailed(err));
-    });
-
+}
 
 /**
  * 
@@ -236,68 +286,7 @@ export function logout() {
 }
 
 
-// const getAParcelSuccess = parcel =>
-//   ({ type: GET_PARCEL_SUCCESS, parcel });
 
-// const getAParcelFailed = parcel =>
-//   ({ type: GET_PARCEL_ERROR, parcel });
-
-// /**
-//    * @function getABill
-//    *
-//    * @param { number } Id
-//    *
-//    * @returns {object} dispatches an action
-//    *
-//    * @description It gets a single bill by Id
-//    */
-// export const getAParcel = id => dispatch =>{
-//   // return console.log(id, 'hello there')
-//   axios.get(`${API}/api/v1/admin/parcel/${id}`)
-//     .then((response) => {
-//       //  return console.log(response)
-//       dispatch(getAParcelSuccess(response.data));
-//     })
-//     .catch((error) => {
-//       swal({
-//         title: "Oops!",
-//         text: `Sorry ${error.response.data.message}`,
-//         icon: "error"
-//       });
-//       dispatch(getAParcelFailed(error.response.data.message));
-//     });
-//   }
-//     const updateAParcelSuccess = parcel =>
-//     ({ type: UPDATE_PARCEL_SUCCESS, parcel });
-
-//   const updateAParcelFailed = parcel =>
-//     ({ type: UPDATE_PARCEL_ERROR, parcel });
-
-//   /**
-//      * @function getABill
-//      *
-//      * @param { number } Id
-//      *
-//      * @returns {object} dispatches an action
-//      *
-//      * @description It gets a single bill by Id
-//      */
-//   export function updateAParcel (id, obj) { 
-//     return dispatch =>
-//     axios.post(`${API}/api/v1/admin/parcel/${id}`, obj)
-//       .then((response) => {
-//         dispatch(updateAParcelSuccess(response.data));
-//       })
-//       .catch((error) => {
-//         console.log(error)
-//         swal({
-//           title: "Oops!",
-//           text: `Sorry ${error.response.data.message}`,
-//           icon: "error"
-//         });
-//         dispatch(updateAParcelFailed(error.response.data.message));
-//       });
-//     }
 
 /**
  *

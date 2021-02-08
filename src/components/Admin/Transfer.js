@@ -1,37 +1,42 @@
 import React, { useState, useEffect } from "react";
 import $ from "jquery";
-import {Link} from 'react-router-dom'
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { getAUser, logout, updateUser, transfer } from "../../actions";
 import logo from "../../assests/images/logo.png";
-import { getAllUsers, logout,verifyUser } from "../../actions";
-const Clients = (props) => {
-	const [customers, setcustomers] = useState([]);
-	const [show, setShow] = useState(false);
 
+const Transfer = (props) => {
+  const [show, setShow] = useState(false);
+  const [amount, setAmount] = useState(0);
+  const [accNumber, setAccNumber] = useState(0);
 
   useEffect(() => {
     //  Preloader
     $("#preloader").fadeOut(500);
     $("#main-wrapper").addClass("show");
-    props.getAllUsers();
+    props.getAUser(props.match.params.id);
   }, []);
 
   useEffect(() => {
-    setcustomers(props.users);
-  }, [props]);
+    //  Preloader
+    setAccNumber(props.user.accNumber);
+  }, [props.user]);
 
-	const handleVerified = ({_id, status}) => {
-
-		const userObj = {
-			_id, status: !status
-		}
-		console.log('object', _id, !status)
-		props.verifyUser(userObj);
-	}
+  const handleTransfer = (e) => {
+    e.preventDefault();
+    const transferObj = {
+      referenceNo: props.user.accNumber,
+      amount,
+      transactionType: "credit"
+    };
+    console.log(transferObj)
+    props.transfer(props.match.params.id, transferObj, props.history);
+  };
 
   const handleMenu = () => {
     setShow(!show);
   };
+
   const logout = () => {
     props.logout();
   };
@@ -65,7 +70,9 @@ const Clients = (props) => {
                           <span className="thumb">
                             <i className="mdi mdi-account"></i>
                           </span>
-                          <span className="name">Howdy, Admin </span>
+                          <span className="name">
+                            Howdy, {props.admin?.username}
+                          </span>
                           <span className="arrow">
                             <i className="la la-angle-down"></i>
                           </span>
@@ -123,7 +130,7 @@ const Clients = (props) => {
         <div className="page_title">
           <div className="container">
             <div className="row">
-              <div className="col-6">
+              <div className="col-xl-12">
                 <div className="page_title-content">
                   <p>
                     Welcome Back,
@@ -138,70 +145,76 @@ const Clients = (props) => {
         <div className="content-body">
           <div className="container">
             <div className="row">
-              <div className="col-xl-9 col-md-8">
-                <div className="card">
+              <div className="col-xl-3 col-md-4">
+                <div className="card settings_menu">
                   <div className="card-header">
-                    <h4 className="card-title">My Clients</h4>
+                    <h4 className="card-title">Settings</h4>
                   </div>
                   <div className="card-body">
-                    <div className="form">
-                      <ul className="linked_account">
-                        {/* {uuidv4} */}
-                        {customers.length > 0 &&
-                          customers.map((customer, index) => (
-                            <li key={index}>
-                              <div className="row">
-                                <div className="col-9">
-                                  <div className="media my-2">
-                                    <span className="mr-3">
-                                      <i className="fa fa-bank"></i>
-                                    </span>
-                                    <div className="media-body">
-                                      <h5 className="mt-0 mb-1">
-                                        {customer?.username}
-                                      </h5>
-                                      <p>{customer?.uuidv4}</p>
-                                    </div>
-                                    <div className="edit-option">
-                                      {/* <a href="#">
-                                        <i className="fa fa-eye"></i>
-                                      </a> */}
-                                      <Link
-                                        to={`/admin/clients/${customer._id}`}>
-                                        <i className="fa fa-pencil"></i>
-                                      </Link>
-                                      {/* <a href="#">
-                                        <i className="fa fa-trash"></i>
-                                      </a> */}
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="col-3">
-                                  <div className="verify">
-                                    <div
-                                      className={
-                                        customer.status
-                                          ? "verified"
-                                          : "not-verify"
-                                      }>
-                                      <span>
-                                        <i className="la la-check"></i>
-                                      </span>
-                                      <div
-                                        onClick={() =>
-                                          handleVerified(customer)
-                                        }>
-                                        {customer.status
-                                          ? "Verified"
-                                          : "Not verified"}
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </li>
-                          ))}
-                      </ul>
+                    <ul>
+                      <li className="nav-item">
+                        <Link
+                          to={`/admin/clients/${props.match.params.id}`}
+                          className="nav-link active">
+                          <i className="mdi mdi-account"></i>
+                          <span>Edit Account Details</span>
+                        </Link>
+                      </li>
+                      <li className="nav-item">
+                        <Link
+                          to={`/admin/transfer/${props.match.params.id}`}
+                          className="nav-link">
+                          <i className="la la-university"></i>
+                          <span>Transfer To Client</span>
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-xl-9 col-md-8">
+                <div className="row">
+                  <div className="col-xl-12">
+                    <div className="card">
+                      <div className="card-header">
+                        <h4 className="card-title">Preperences</h4>
+                      </div>
+                      <div className="card-body">
+                        <form action="">
+                          <div className="form-row">
+                            <div className="form-group col-xl-6">
+                              <label className="mr-sm-2">Account Number</label>
+                              <input
+                                type="text"
+                                className="form-control"
+                                placeholder="67****899"
+                                name="accNumber"
+                                disabled
+                                value={accNumber || ""}
+                              />
+                            </div>
+                            <div className="form-group col-xl-6">
+                              <label className="mr-sm-2">Amount</label>
+                              <input
+                                type="number"
+                                className="form-control"
+                                placeholder="1000"
+                                name="amount"
+                                value={amount || ""}
+                                onChange={(e) => setAmount(e.target.value)}
+                              />
+                            </div>
+                            <div className="form-group">
+                              <button
+                                className="btn btn-success pl-5 pr-5"
+                                onClick={handleTransfer}>
+                                Transfer
+                              </button>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -215,10 +228,13 @@ const Clients = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  // console.log(state);
   const admin = state.setCurrentUser.user.user;
-  const users = state.clients?.clients || [];
-  return { admin, users };
+  const user = state.clients?.user || {};
+  return { admin, user };
 };
-
-export default connect(mapStateToProps, { getAllUsers, logout, verifyUser })(Clients);
+export default connect(mapStateToProps, {
+  getAUser,
+  logout,
+  updateUser,
+  transfer,
+})(Transfer);
