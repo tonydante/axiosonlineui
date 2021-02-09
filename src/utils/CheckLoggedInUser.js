@@ -46,7 +46,6 @@ const CheckLoggedInUser = (ComposedComponent) => {
   };
 
   const mapStateToProps = state => {
-    console.log(state, 'object')
     const isAuthenticated = state.setCurrentUser.isAuthenticated;
     const role = state.setCurrentUser.user.user?.role;
     return {isAuthenticated, role}

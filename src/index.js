@@ -9,8 +9,8 @@ import setAuthToken from "./utils/SetAuthToken";
 import rootReducer from "./reducers";
 import "./assests/js/scripts";
 import "./assests/css/style.css";
-// import "./index.scss";
 import App from "./App";
+
 
 const middleware = applyMiddleware(thunk);
 const configureStore = (state = {}) =>
@@ -19,8 +19,9 @@ const configureStore = (state = {}) =>
     state,
     compose(
       middleware,
-      window.__REDUX_DEVTOOLS_EXTENSION__ &&
-        window.__REDUX_DEVTOOLS_EXTENSION__()
+      window.__REDUX_DEVTOOLS_EXTENSION__
+        ? window.__REDUX_DEVTOOLS_EXTENSION__()
+        : (f) => f
     )
   );
 
