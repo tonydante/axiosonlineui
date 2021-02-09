@@ -117,8 +117,6 @@ function Home() {
                 <div className="col-xl-7">
                   <div className="section_heading">
                     <span>Helpful Banking Features</span>
-                    {/* <h3>The most trusted Treemium ocurrency platform</h3>
-                    <p>Here are a few reasons why you should choose Coinbase</p> */}
                   </div>
                 </div>
               </div>
@@ -246,12 +244,11 @@ function Home() {
               <div className="row">
                 <div className="col-xl-6 col-md-6">
                   <div className="footer-link text-left">
-                    <a href="#" className="m_logo">
-                      <img src="./images/logo.png" alt="" />
-                    </a>
-                    <a href="about.html">About</a>
-                    <a href="privacy-policy.html">Privacy Policy</a>
-                    <a href="term-condition.html">Term & Service</a>
+                    <Link to="/" className="m_logo">
+                      <img src={logo} alt="" />
+                    </Link>
+                    <Link to="/about">About</Link>
+               
                   </div>
                 </div>
                 <div className="col-xl-6 col-md-6 text-lg-right text-center"></div>
@@ -259,7 +256,7 @@ function Home() {
               <div className="row align-items-center">
                 <div className="col-xl-12 text-center text-lg-right">
                   <div className="copy_right text-center text-lg-center">
-                    Copyright © 2020 Quixlab. All Rights Reserved.
+                    Copyright © 2018 axiosonline. All Rights Reserved.
                   </div>
                 </div>
               </div>

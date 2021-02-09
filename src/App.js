@@ -18,13 +18,12 @@ import User from "./components/User";
 import COT from "./components/COT";
 import Tax from "./components/Tax";
 import Home from "./components/Home";
+import About from "./components/About";
 import AdminBoard from "./components/Admin/AdminBoard";
 import Clients from "./components/Admin/Clients";
 import Client from "./components/Admin/Client";
 import Transfer from "./components/Admin/Transfer";
-// import Dashboard from "./components/Dashboard";
-// import Slot from "./components/Slots";
-// import AdminDashboard from "./components/Admin/Dashboard";
+import NotFound from './NotFound'
 import $ from "jquery";
 
 
@@ -129,40 +128,27 @@ const App = (props) => {
               path="/user/:id"
               component={User}
             />
-
-            {/* <PrivateRoute
-              role={this.props.role}
-              requiredRoles={["user"]}
-              exact
-              path="/dashboard"
-              component={Dashboard}
-            />
-            <PrivateRoute
-              role={this.props.role}
-              requiredRoles={["user"]}
-              exact
-              path="/slots"
-              component={Slot}
-            /> */}
-          </Switch>
           <Route exact path="/" component={CheckLoggedInUser(Home)} />
+          <Route exact path="/about" component={CheckLoggedInUser(About)} />
           <Route exact path="/signin" component={CheckLoggedInUser(Signin)} />
           <Route exact path="/signup" component={CheckLoggedInUser(Signup)} />
           <Route
             exact
             path="/admin/signin"
             component={CheckLoggedInUser(AdminSignin)}
-          />
+            />
           <Route
             exact
             path="/admin/signup"
             component={CheckLoggedInUser(AdminSignup)}
-          />
+            />
           <Route
             exact
             path="/verify-token"
             component={CheckLoggedInUser(VerifyToken)}
-          />
+            />
+          <Route component={NotFound} />
+            </Switch>
         </div>
       </Router>
     );
