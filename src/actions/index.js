@@ -22,8 +22,8 @@ import {
   WITHDRAW_ERROR,
 } from "./constants";
 
-// const API = 'https://creditdeliveries.herokuapp.com';
-const API = 'http://localhost:8000';
+const API = 'https://axiosonline.herokuapp.com';
+// const API = 'http://localhost:8000';
 
 /**
  *
