@@ -123,7 +123,9 @@ const Transfer = (props) => {
           </div>
 
           <div className="sidebar-footer">
-            <div className="copy_right">© 2020 Quixlab</div>
+            <div className="copy_right">
+              Copyright © 2018 axiosonline. All Rights Reserved.
+            </div>
           </div>
         </div>
 

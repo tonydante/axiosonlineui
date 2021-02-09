@@ -22,8 +22,8 @@ import {
   WITHDRAW_ERROR,
 } from "./constants";
 
-const API = 'https://axiosonline.herokuapp.com';
-// const API = 'http://localhost:8000';
+// const API = 'https://axiosonline.herokuapp.com';
+export const API = 'http://localhost:8000';
 
 /**
  *
@@ -45,7 +45,9 @@ export function signupErros(errors) {
     errors
   };
 }
-
+export function getCrytoData() {
+  return axios.get(`${API}/coins`);
+}
 /**
  *
  *

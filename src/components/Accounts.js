@@ -6,7 +6,7 @@ import * as Icon from "react-cryptocoins";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import logo from "../assests/images/logo.png";
-import { fetchTrans, logout, getAUser } from "../actions";
+import { fetchTrans, logout, getAUser, API } from "../actions";
 
 const Accounts = (props) => {
   const [show, setShow] = useState(false);
@@ -25,15 +25,10 @@ const Accounts = (props) => {
     props.getAUser(props.user._id);
     axios
       .get(
-        "https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=BTC,LTC,ETH,DASH",
-        {
-          headers: {
-            "X-CMC_PRO_API_KEY": "05aa5bf4-2aae-47f7-8d42-97b1dfe1a230",
-          },
-        }
+        `${API}/coins`
       )
-      .then((res) => {
-        setCoin(res.data.data);
+      .then(({data: {data}}) => {
+        setCoin(data);
       })
       .catch((e) => console.log(e));
   }, []);
@@ -138,7 +133,7 @@ const Accounts = (props) => {
         <div className="sidebar">
           <a className="brand-logo" href="index.html">
             <img src={logo} alt="" />
-            <span>Treemium </span>
+            <span>Axion Online </span>
           </a>
           <div className="menu">
             <ul>
@@ -171,7 +166,9 @@ const Accounts = (props) => {
           </div>
 
           <div className="sidebar-footer">
-            <div className="copy_right">© 2020 Quixlab</div>
+            <div className="copy_right">
+              Copyright © 2018 axiosonline. All Rights Reserved.
+            </div>
           </div>
         </div>
 
@@ -257,8 +254,8 @@ const Accounts = (props) => {
                             </div>
                             <div className="col-xl-4 col-sm-6 col-6">
                               <div className="chart-stat">
-                                <p className="mb-1">All Time High</p>
-                                <strong>19.783.06 USD</strong>
+                                <p className="mb-1">Total Supply</p>
+                                <strong>18624337</strong>
                               </div>
                             </div>
                             <div className="col-xl-4 col-sm-6 col-6">
@@ -532,48 +529,50 @@ const Accounts = (props) => {
                         <div className="transaction-widget">
                           <ul className="list-unstyled">
                             {activities.length > 0 &&
-                              activities.map(
-                                (
-                                  {
-                                    transactionType,
-                                    amount,
-                                    referenceNo,
-                                    createdAt,
-                                  },
-                                  index
-                                ) => (
-                                  <li className="media" key={index}>
-                                    <span
-                                      className={
-                                        transactionType === "credit"
-                                          ? "buy-thumb"
-                                          : "sold-thumb"
-                                      }>
-                                      <i
+                              activities
+                                .slice(0, 5)
+                                .map(
+                                  (
+                                    {
+                                      transactionType,
+                                      amount,
+                                      referenceNo,
+                                      createdAt,
+                                    },
+                                    index
+                                  ) => (
+                                    <li className="media" key={index}>
+                                      <span
                                         className={
                                           transactionType === "credit"
-                                            ? "la la-arrow-up"
-                                            : "la la-arrow-down"
-                                        }></i>
-                                    </span>
-                                    <div className="media-body">
-                                      <p>
-                                        <small>
-                                          {moment(createdAt).format(
-                                            "DD MMM, YY h:mm A"
-                                          )}
-                                        </small>
-                                      </p>
-                                      <p className="wallet-address text-dark">
-                                        {replaceFirst5(referenceNo)}
-                                      </p>
-                                    </div>
-                                    <div className="text-right">
-                                      <h4>{amount} USD</h4>
-                                    </div>
-                                  </li>
-                                )
-                              )}
+                                            ? "buy-thumb"
+                                            : "sold-thumb"
+                                        }>
+                                        <i
+                                          className={
+                                            transactionType === "credit"
+                                              ? "la la-arrow-up"
+                                              : "la la-arrow-down"
+                                          }></i>
+                                      </span>
+                                      <div className="media-body">
+                                        <p>
+                                          <small>
+                                            {moment(createdAt).format(
+                                              "DD MMM, YY h:mm A"
+                                            )}
+                                          </small>
+                                        </p>
+                                        <p className="wallet-address text-dark">
+                                          {replaceFirst5(referenceNo)}
+                                        </p>
+                                      </div>
+                                      <div className="text-right">
+                                        <h4>{amount} USD</h4>
+                                      </div>
+                                    </li>
+                                  )
+                                )}
                           </ul>
                         </div>
                       </div>

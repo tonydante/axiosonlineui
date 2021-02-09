@@ -78,7 +78,7 @@ const VerifyStepTwo = ({ history }) => {
         <div className="sidebar">
           <a className="brand-logo" href="index.html">
             <img src={logo} alt="" />
-            <span>Treemium </span>
+            <span>Axion Online </span>
           </a>
           <div className="menu">
             <ul>
@@ -132,7 +132,9 @@ const VerifyStepTwo = ({ history }) => {
                 <i className="fa fa-facebook"></i>
               </a>
             </div>
-            <div className="copy_right">© 2020 Quixlab</div>
+            <div className="copy_right">
+              Copyright © 2018 axiosonline. All Rights Reserved.
+            </div>
           </div>
         </div>
 

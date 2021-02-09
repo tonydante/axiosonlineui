@@ -33,6 +33,7 @@ const Transactions = (props) => {
   const logout = () => {
     props.logout();
   };
+  console.log(activities[activities.length - 1]?.createdAt, 'transactions')
   return (
     <>
       <div id="preloader">
@@ -92,7 +93,7 @@ const Transactions = (props) => {
         <div className="sidebar">
           <a className="brand-logo" href="index.html">
             <img src={logo} alt="" />
-            <span>Treemium </span>
+            <span>Axion Online </span>
           </a>
           <div className="menu">
             <ul>
@@ -104,7 +105,7 @@ const Transactions = (props) => {
                   <span className="nav-text">Home</span>
                 </Link>
               </li>
-            
+
               <li>
                 <Link to={`/user/${props.user.username}/transactions`}>
                   <span>
@@ -125,7 +126,9 @@ const Transactions = (props) => {
           </div>
 
           <div className="sidebar-footer">
-            <div className="copy_right">© 2020 Quixlab</div>
+            <div className="copy_right">
+              Copyright © 2018 axiosonline. All Rights Reserved.
+            </div>
           </div>
         </div>
 
@@ -179,12 +182,12 @@ const Transactions = (props) => {
                       </li>
                       <li className="mb-1">
                         <h5 className="mr-4">Total Transactions</h5>
-                        <span>103 Time ( 5 Today )</span>
+                        <span>{activities.length} (times)</span>
                       </li>
                       <li>
                         <h5 className="text-danger mr-4">Last Transaction</h5>
                         <span className="text-danger">
-                          3 February, 2020, 10:00 PM
+                          {moment(activities[activities.length - 1]?.createdAt).format("DD MMM, YY h:mm A")}
                         </span>
                       </li>
                     </ul>
@@ -204,56 +207,52 @@ const Transactions = (props) => {
                         <table className="table mb-0 table-responsive-sm">
                           <tbody>
                             {activities.length > 0 &&
-                              activities
-                                .slice(0, 5)
-                                .map(
-                                  (
-                                    {
-                                      transactionType,
-                                      amount,
-                                      referenceNo,
-                                      createdAt,
-                                    },
-                                    index
-                                  ) => (
-                                    <tr key={index}>
-                                      <td>
-                                        <span
-                                          className={
-                                            transactionType === "credit"
-                                              ? "buy-thumb"
-                                              : "sold-thumb"
-                                          }>
-                                          <i
-                                            className={
-                                              transactionType === "credit"
-                                                ? "la la-arrow-up"
-                                                : "la la-arrow-down"
-                                            }></i>
-                                        </span>
-                                      </td>
-                                      <td>
-                                        <i className="cc BTC"></i>{" "}
-                                        {transactionType.toUpperCase()}
-                                      </td>
-                                      <td>
-                                        Using - Bank{" "}
-                                        {replaceFirst5(referenceNo)}
-                                      </td>
-                                      <td
+                              activities.map(
+                                (
+                                  {
+                                    transactionType,
+                                    amount,
+                                    referenceNo,
+                                    createdAt,
+                                  },
+                                  index
+                                ) => (
+                                  <tr key={index}>
+                                    <td>
+                                      <span
                                         className={
                                           transactionType === "credit"
-                                            ? "text-success"
-                                            : "text-danger"
+                                            ? "buy-thumb"
+                                            : "sold-thumb"
                                         }>
-                                        {moment(createdAt).format(
-                                          "DD MMM, YY h:mm A"
-                                        )}
-                                      </td>
-                                      <td>{amount}</td>
-                                    </tr>
-                                  )
-                                )}
+                                        <i
+                                          className={
+                                            transactionType === "credit"
+                                              ? "la la-arrow-up"
+                                              : "la la-arrow-down"
+                                          }></i>
+                                      </span>
+                                    </td>
+                                    <td>
+                                      {transactionType.toUpperCase()}
+                                    </td>
+                                    <td>
+                                      Using - Bank {replaceFirst5(referenceNo)}
+                                    </td>
+                                    <td
+                                      className={
+                                        transactionType === "credit"
+                                          ? "text-success"
+                                          : "text-danger"
+                                      }>
+                                      {moment(createdAt).format(
+                                        "DD MMM, YY h:mm A"
+                                      )}
+                                    </td>
+                                    <td>{amount}</td>
+                                  </tr>
+                                )
+                              )}
                           </tbody>
                         </table>
                       </div>

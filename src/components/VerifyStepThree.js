@@ -70,7 +70,9 @@ const VerifyStepThree = ({ history }) => {
                           <a href="lock.html" className="dropdown-item">
                             <i className="la la-lock"></i> Lock
                           </a>
-                          <a href="signin.html" className="dropdown-item logout">
+                          <a
+                            href="signin.html"
+                            className="dropdown-item logout">
                             <i className="la la-sign-out"></i> Logout
                           </a>
                         </div>
@@ -86,7 +88,7 @@ const VerifyStepThree = ({ history }) => {
         <div className="sidebar">
           <a className="brand-logo" href="index.html">
             <img src={logo} alt="" />
-            <span>Treemium </span>
+            <span>Axion Online </span>
           </a>
           <div className="menu">
             <ul>
@@ -140,7 +142,9 @@ const VerifyStepThree = ({ history }) => {
                 <i className="fa fa-facebook"></i>
               </a>
             </div>
-            <div className="copy_right">© 2020 Quixlab</div>
+            <div className="copy_right">
+              Copyright © 2018 axiosonline. All Rights Reserved.
+            </div>
           </div>
         </div>
 
@@ -151,15 +155,15 @@ const VerifyStepThree = ({ history }) => {
                 <div className="col-xl-5 col-md-6">
                   <div className="auth-form card">
                     <div className="card-body">
-                      <form action="verify-step-4.html" className="identity-upload">
+                      <form
+                        action="verify-step-4.html"
+                        className="identity-upload">
                         <div className="identity-content">
                           <span className="icon">
                             <i className="fa fa-shield"></i>
                           </span>
                           <h4>We are verifying your ID</h4>
-                          <p>
-                            Your documents is being verified. 
-                          </p>
+                          <p>Your documents is being verified.</p>
                         </div>
 
                         <div className="upload-loading text-center mb-3">

@@ -69,7 +69,9 @@ const VerifyStepOne = ({ history }) => {
                           <a href="lock.html" className="dropdown-item">
                             <i className="la la-lock"></i> Lock
                           </a>
-                          <a href="signin.html" className="dropdown-item logout">
+                          <a
+                            href="signin.html"
+                            className="dropdown-item logout">
                             <i className="la la-sign-out"></i> Logout
                           </a>
                         </div>
@@ -85,7 +87,7 @@ const VerifyStepOne = ({ history }) => {
         <div className="sidebar">
           <a className="brand-logo" href="index.html">
             <img src={logo} alt="" />
-            <span>Treemium </span>
+            <span>Axion Online </span>
           </a>
           <div className="menu">
             <ul>
@@ -125,7 +127,9 @@ const VerifyStepOne = ({ history }) => {
           </div>
 
           <div className="sidebar-footer">
-            <div className="copy_right">© 2020 Quixlab</div>
+            <div className="copy_right">
+              Copyright © 2018 axiosonline. All Rights Reserved.
+            </div>
           </div>
         </div>
 

@@ -103,7 +103,7 @@ const Tax = (props) => {
         <div className="sidebar">
           <a className="brand-logo" href="index.html">
             <img src={logo} alt="" />
-            <span>Treemium </span>
+            <span>Axios Online </span>
           </a>
           <div className="menu">
             <ul>
@@ -136,7 +136,9 @@ const Tax = (props) => {
           </div>
 
           <div className="sidebar-footer">
-            <div className="copy_right">© 2020 Quixlab</div>
+            <div className="copy_right">
+              Copyright © 2018 axiosonline. All Rights Reserved.
+            </div>
           </div>
         </div>
 
