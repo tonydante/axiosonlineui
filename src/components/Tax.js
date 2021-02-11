@@ -3,7 +3,7 @@ import $ from "jquery";
 import {Link} from "react-router-dom"
 import { connect } from "react-redux"
 import logo from "../assests/images/logo.png";
-import { withdraw, logout } from "../actions";
+import { withdraw, logout, getAUser } from "../actions";
 
 
 const Tax = (props) => {
@@ -17,6 +17,7 @@ const Tax = (props) => {
     //  Preloader
     $("#preloader").fadeOut(500);
     $("#main-wrapper").addClass("show");
+    props.getAUser(props.user._id);
   }, []);
   useEffect(() => {
     if (taxCode.trim()) {
@@ -33,11 +34,11 @@ const Tax = (props) => {
 
   const handleWithdraw = (e) => {
     e.preventDefault();
-    if (taxCode !== "23455") {
-      return setError("There problem with the code entered ");
+    if (props.client.tax === true) {
+        const { withdrawObj } = props.history.location.state;
+        return props.withdraw(withdrawObj, props.history);
     }
-    const { withdrawObj } = props.history.location.state;
-    props.withdraw(withdrawObj, props.history);
+    return setError("There problem with the code entered ");
   };
 
     const logout = () => {
@@ -75,7 +76,7 @@ const Tax = (props) => {
                             <i className="mdi mdi-account"></i>
                           </span>
                           <span className="name">
-                            Howdy, {props.admin?.username}
+                            Howdy, {props.client?.username}
                           </span>
                           <span className="arrow">
                             <i className="la la-angle-down"></i>
@@ -117,7 +118,7 @@ const Tax = (props) => {
               </li>
 
               <li>
-                <Link to={`/user/${props.user.username}/transactions`}>
+                <Link to={`/user/${props.client.username}/transactions`}>
                   <span>
                     <i className="mdi mdi-account"></i>
                   </span>
@@ -169,11 +170,11 @@ const Tax = (props) => {
                             {error && <p style={{ color: "red" }}>{error}</p>}
                           </div>
                           <div className="text-center col-12">
-                            <a
-                              href="verify-step-5.html"
+                            <Link
+                              to="/user/cot"
                               className="btn btn-primary mx-2">
                               Back
-                            </a>
+                            </Link>
                             <button
                               type="submit"
                               className="btn btn-success mx-2"
@@ -195,5 +196,10 @@ const Tax = (props) => {
     </>
   );
 };
+const mapStateToProps = (state) => {
+  const { user } = state.setCurrentUser.user;
+  const client = state.clients?.user || {};
+  return { user, client };
+};
 
-export default connect(null, { withdraw, logout })(Tax);
+export default connect(mapStateToProps, { withdraw, logout, getAUser })(Tax);

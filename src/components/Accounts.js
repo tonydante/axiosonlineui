@@ -51,12 +51,12 @@ const Accounts = (props) => {
       amount,
       transactionType: "debit",
     };
-    const userId = {
-      id: props.user._id,
-    };
+    // const userId = {
+    //   id: props.user._id,
+    // };
     props.history.push({
-      pathname: "/user/cot",
-      state: { userId, withdrawObj },
+      pathname: "/user/transfer",
+      state: { withdrawObj },
     });
   };
 
@@ -69,7 +69,6 @@ const Accounts = (props) => {
   const logout = () => {
     props.logout();
   };
-  console.log(coin, "coin");
   return (
     <>
       <div id="preloader">
@@ -105,7 +104,7 @@ const Accounts = (props) => {
                             <i className="mdi mdi-account"></i>
                           </span>
                           <span className="name">
-                            Howdy, {props.user?.username}
+                            Howdy, {props.client?.username}
                           </span>
                           <span className="arrow">
                             <i className="la la-angle-down"></i>

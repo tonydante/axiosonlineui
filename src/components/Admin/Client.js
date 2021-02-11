@@ -18,6 +18,8 @@ const Client = (props) => {
   const [state, setState] = useState("");
   const [postalcode, setPostalCode] = useState("");
   const [country, setCountry] = useState("");
+  const [tax, setTax] = useState(false);
+  const [cot, setCot] = useState(false);
 
   useEffect(() => {
     //  Preloader
@@ -38,10 +40,45 @@ const Client = (props) => {
     setState(props.user.state)
     setPostalCode(props.user.postalcode);
     setCountry(props.user.country);
+    setTax(props.user.tax)
+    setCot(props.user.cot)
   }, [props.user]);
 
   const handleMenu = () => {
     setShow(!show);
+  };
+
+  const handleCotStatus = (e) => {
+     e.preventDefault();
+     swal("Are you sure you want to update this?", {
+       buttons: ["Oh noez!", "Aww yiss!"],
+      }).then((update) => {
+        if (update) {
+         setCot(!cot)
+         props.updateUser(props.match.params.id, { cot: !cot }, props.history);
+         swal("Poof! user cotcode has been updated!", {
+           icon: "success",
+         });
+       } else {
+         swal("No updates were made!");
+       }
+     });
+  };
+  const handleTaxStatus = (e) => {
+     e.preventDefault();
+     swal("Are you sure you want to update this?", {
+       buttons: ["Oh noez!", "Aww yiss!"],
+      }).then((update) => {
+        if (update) {
+         setTax(!tax)
+         props.updateUser(props.match.params.id, { tax: !tax }, props.history);
+         swal("Poof! user taxcode has been updated!", {
+           icon: "success",
+         });
+       } else {
+         swal("No updates were made!");
+       }
+     });
   };
 
   const handleAccDetails = (e) => {
@@ -105,6 +142,7 @@ const Client = (props) => {
   const logout = () => {
     props.logout();
   };
+
   return (
     <>
       <div id="preloader">
@@ -164,7 +202,7 @@ const Client = (props) => {
         <div className="sidebar">
           <Link className="brand-logo" to="/">
             <img src={logo} alt="" />
-            <span>ACBC </span>
+            <span>Axios Online </span>
           </Link>
           <div className="menu">
             <ul>
@@ -268,7 +306,7 @@ const Client = (props) => {
                                   type="number"
                                   className="form-control"
                                   placeholder="Balance"
-                                  value={balance || ""}
+                                  value={balance}
                                   onChange={(e) => setBalance(e.target.value)}
                                 />
                               </div>
@@ -320,6 +358,71 @@ const Client = (props) => {
                                 className="btn btn-success"
                                 onClick={handleAccDetails}>
                                 Save
+                              </button>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-xl-6">
+                    <div className="card">
+                      <div className="card-header">
+                        <h4 className="card-title">Approve COT Code   </h4>
+                      </div>
+                      <div className="card-body">
+                        <form action="">
+                          <div className="form-row">
+                            <div className="form-group col-xl-12">
+                              <label className="mr-sm-2">
+                                {" "}
+                                COT Code status{" "}
+                              </label>
+                              <input
+                                type="text"
+                                className="form-control"
+                                value={cot || false}
+                                onChange={(e) => setCot(e.target.value)}
+                              />
+                            </div>
+                            <div className="col-12">
+                              <button
+                                className="btn btn-success"
+                                onClick={handleCotStatus}>
+                                {cot ? "Revoke" : "Approve"}
+                              </button>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-xl-6">
+                    <div className="card">
+                      <div className="card-header">
+                        <h4 className="card-title">Approve TAX Code </h4>
+                      </div>
+                      <div className="card-body">
+                        <form action="">
+                          <div className="form-row">
+                            <div className="form-group col-xl-12">
+                              <label className="mr-sm-2">
+                                {" "}
+                                TAx Code Status
+                              </label>
+                              <input
+                                type="text"
+                                className="form-control"
+                                value={tax || false}
+                                onChange={(e) => setTax(e.target.value)}
+                                disabled
+                              />
+                            </div>
+                            <div className="col-12">
+                              <button
+                                className="btn btn-success"
+                                onClick={handleTaxStatus}>
+                                {tax ? "Revoke" : "Approve"}
                               </button>
                             </div>
                           </div>

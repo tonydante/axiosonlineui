@@ -25,7 +25,6 @@ const Clients = (props) => {
 		const userObj = {
 			_id, status: !status
 		}
-		console.log('object', _id, !status)
 		props.verifyUser(userObj);
 	}
 
@@ -92,7 +91,7 @@ const Clients = (props) => {
         <div className="sidebar">
           <Link className="brand-logo" to="/">
             <img src={logo} alt="" />
-            <span>ACBC </span>
+            <span>Axios Online </span>
           </Link>
           <div className="menu">
             <ul>

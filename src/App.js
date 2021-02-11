@@ -15,6 +15,8 @@ import VerifyStepFour from "./components/VerifyStepFour";
 import Accounts from "./components/Accounts";
 import Transactions from "./components/Transactions";
 import User from "./components/User";
+import UserTransfer from "./components/UserTransfer";
+import TransferRedirect from "./components/TransferRedirect";
 import COT from "./components/COT";
 import Tax from "./components/Tax";
 import Home from "./components/Home";
@@ -106,6 +108,20 @@ const App = (props) => {
               exact
               path="/user/:name/transactions"
               component={Transactions}
+            />
+            <PrivateRoute
+              role={props.role}
+              requiredRoles={["user"]}
+              exact
+              path="/user/transfer"
+              component={UserTransfer}
+            />
+            <PrivateRoute
+              role={props.role}
+              requiredRoles={["user"]}
+              exact
+              path="/user/transferdirect"
+              component={TransferRedirect}
             />
             <PrivateRoute
               role={props.role}

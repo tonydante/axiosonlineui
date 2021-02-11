@@ -92,7 +92,7 @@ const AdminBoard = (props) => {
         <div className="sidebar">
           <Link className="brand-logo" to="/">
             <img src={logo} alt="" />
-            <span>ACBC </span>
+            <span>Axios Online </span>
           </Link>
           <div className="menu">
             <ul>
@@ -172,12 +172,14 @@ const AdminBoard = (props) => {
                       </li>
                       <li className="mb-1">
                         <h5 className="mr-4">Total Transactions</h5>
-                        <span>103 Time ( 5 Today )</span>
+                        <span>{activities.length} (times)</span>
                       </li>
                       <li>
                         <h5 className="text-danger mr-4">Last Transaction</h5>
                         <span className="text-danger">
-                          3 February, 2020, 10:00 PM
+                          {moment(
+                            activities[activities.length - 1]?.createdAt
+                          ).format("DD MMM, YY h:mm A")}
                         </span>
                       </li>
                     </ul>

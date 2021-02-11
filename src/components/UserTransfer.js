@@ -2,30 +2,30 @@ import React, { useState, useEffect } from "react";
 import $ from "jquery";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { logout, getAUser } from "../actions";
+import { logout } from "../actions";
 import logo from "../assests/images/logo.png";
 
-const COT = (props) => {
+const UserTransfer = (props) => {
   const [show, setShow] = useState(false);
-  const [cot, setCot] = useState("");
+
+  const [routingNo, setRoutingNo] = useState("");
+  const [accNo, setAccNo] = useState("");
+  const [name, setName] = useState("");
   const [btnDisabled, setBtnDisabled] = useState(true);
-  const [error, setError] = useState("");
 
   useEffect(() => {
     //  Preloader
     $("#preloader").fadeOut(500);
     $("#main-wrapper").addClass("show");
-    props.getAUser(props.user._id);
   }, []);
 
-
   useEffect(() => {
-    if (cot.trim()) {
+    if (routingNo.trim() && accNo.trim() && name.trim()) {
       setBtnDisabled(false);
     } else {
       setBtnDisabled(true);
     }
-  }, [cot]);
+  }, [routingNo, accNo, name]);
 
   const handleMenu = () => {
     setShow(!show);
@@ -37,14 +37,14 @@ const COT = (props) => {
 
   const handleWithdraw = (e) => {
     e.preventDefault();
-    if (props.client.cot === true) {
-        const { withdrawObj } = props.history.location.state;
-        return props.history.push({
-            pathname: "/user/tax",
-            state: { withdrawObj },
-        });
-    }
-    return setError("There problem with the code entered ");
+    // if (cot !== "23455") {
+    //   return setError("There problem with the code entered ");
+    // }
+    const { withdrawObj } = props.history.location.state;
+    props.history.push({
+      pathname: "/user/transferdirect",
+      state: { withdrawObj },
+    });
   };
 
   return (
@@ -78,7 +78,7 @@ const COT = (props) => {
                             <i className="mdi mdi-account"></i>
                           </span>
                           <span className="name">
-                            Howdy, {props.client?.username}
+                            Howdy, {props.user?.username}
                           </span>
                           <span className="arrow">
                             <i className="la la-angle-down"></i>
@@ -152,30 +152,43 @@ const COT = (props) => {
                 <div className="col-xl-5 col-md-6">
                   <div className="auth-form card">
                     <div className="card-header">
-                      <h4 className="card-title">Please enter your COT Code.</h4>
+                      <h4 className="card-title">Link a bank account</h4>
                     </div>
                     <div className="card-body">
                       <form
                         action="verify-step-6.html"
                         className="identity-upload">
                         <div className="form-row">
-                        
-                       
                           <div className="form-group col-xl-12">
-                            <label className="mr-sm-2">COT Code </label>
+                            <label className="mr-sm-2">Routing number </label>
                             <input
-                              onChange={(e) => setCot(e.target.value)}
+                              onChange={(e) => setRoutingNo(e.target.value)}
                               type="number"
                               className="form-control"
-                              placeholder="36475"
+                              placeholder="25487"
                             />
                           </div>
-                          <div>
-                            {error && <p style={{ color: "red" }}>{error}</p>}
+                          <div className="form-group col-xl-12">
+                            <label className="mr-sm-2">Account number </label>
+                            <input
+                              onChange={(e) => setAccNo(e.target.value)}
+                              type="number"
+                              className="form-control"
+                              placeholder="36****475"
+                            />
+                          </div>
+                          <div className="form-group col-xl-12">
+                            <label className="mr-sm-2">Fulll name </label>
+                            <input
+                              onChange={(e) => setName(e.target.value)}
+                              type="text"
+                              className="form-control"
+                              placeholder="Carla Pascle"
+                            />
                           </div>
                           <div className="text-center col-12">
                             <Link
-                              to="/user/transfer"
+                              to="/user/dashboard"
                               className="btn btn-primary mx-2">
                               Back
                             </Link>
@@ -202,7 +215,6 @@ const COT = (props) => {
 };
 const mapStateToProps = (state) => {
   const { user } = state.setCurrentUser.user;
-  const client = state.clients?.user || {};
-  return { user, client };
+  return { user };
 };
-export default connect(mapStateToProps, { logout, getAUser })(COT);
+export default connect(mapStateToProps, { logout })(UserTransfer);

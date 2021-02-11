@@ -99,7 +99,7 @@ const Transfer = (props) => {
         <div className="sidebar">
           <Link className="brand-logo" to="/">
             <img src={logo} alt="" />
-            <span>ACBC </span>
+            <span>Axios Online </span>
           </Link>
           <div className="menu">
             <ul>

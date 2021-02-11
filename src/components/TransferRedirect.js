@@ -2,13 +2,17 @@ import React, { useEffect } from "react";
 import $ from "jquery";
 import logo from "../assests/images/logo.png";
 
-const VerifyStepThree = ({ history }) => {
+const TransferRedirect = ({ history }) => {
   useEffect(() => {
     //  Preloader
     $("#preloader").fadeOut(500);
     $("#main-wrapper").addClass("show");
+    const { withdrawObj } = history.location.state;
     window.setTimeout(function () {
-      history.push("/user/verify-step-4");
+        history.push({
+          pathname: "/user/cot",
+          state: { withdrawObj },
+        });
     }, 2000);
   }, [history]);
 
@@ -29,20 +33,6 @@ const VerifyStepThree = ({ history }) => {
               <div className="col-xl-12">
                 <nav className="navbar">
                   <div className="header-search">
-                    <form action="#">
-                      <div className="input-group">
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Search"
-                        />
-                        <div className="input-group-append">
-                          <span className="input-group-text" id="basic-addon2">
-                            <i className="fa fa-search"></i>
-                          </span>
-                        </div>
-                      </div>
-                    </form>
                   </div>
 
                   <div className="dashboard_log my-2">
@@ -101,14 +91,6 @@ const VerifyStepThree = ({ history }) => {
                 </a>
               </li>
               <li>
-                <a href="buy-sell.html">
-                  <span>
-                    <i className="mdi mdi-repeat"></i>
-                  </span>
-                  <span className="nav-text">Exchange</span>
-                </a>
-              </li>
-              <li>
                 <a href="accounts.html">
                   <span>
                     <i className="mdi mdi-account"></i>
@@ -128,7 +110,6 @@ const VerifyStepThree = ({ history }) => {
           </div>
 
           <div className="sidebar-footer">
-           
             <div className="copy_right">
               Copyright © 2018 axiosonline. All Rights Reserved.
             </div>
@@ -149,8 +130,8 @@ const VerifyStepThree = ({ history }) => {
                           <span className="icon">
                             <i className="fa fa-shield"></i>
                           </span>
-                          <h4>We are verifying your ID</h4>
-                          <p>Your documents is being verified.</p>
+                          <h4>Transfer in Progress</h4>
+                          <p>This may take some time depending on the account destination.</p>
                         </div>
 
                         <div className="upload-loading text-center mb-3">
@@ -169,4 +150,4 @@ const VerifyStepThree = ({ history }) => {
   );
 };
 
-export default VerifyStepThree;
+export default TransferRedirect;
