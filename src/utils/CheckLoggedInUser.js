@@ -14,7 +14,7 @@ const CheckLoggedInUser = (ComposedComponent) => {
       if ((this.props.isAuthenticated && (this.props.role === 'admin')) ) {
         this.props.history.push('/admin/dashboard');
       } else if (this.props.isAuthenticated && (this.props.role === 'user')) {
-        this.props.history.push('/dashboard');
+        this.props.history.push('/user/dashboard');
       }
     }
 
@@ -27,7 +27,7 @@ const CheckLoggedInUser = (ComposedComponent) => {
       if ((this.props.isAuthenticated && (this.props.role === 'admin')) ) {
         this.props.history.push('/admin/dashboard');
       } else if (this.props.isAuthenticated && (this.props.role === 'user')) {
-        this.props.history.push('/dashboard');
+        this.props.history.push('/user/dashboard');
       }
     }
 

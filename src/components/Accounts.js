@@ -3,7 +3,7 @@ import $ from "jquery";
 import axios from "axios";
 import moment from "moment";
 import * as Icon from "react-cryptocoins";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import logo from "../assests/images/logo.png";
 import { fetchTrans, logout, getAUser, API } from "../actions";
@@ -19,6 +19,8 @@ const Accounts = (props) => {
 
   useEffect(() => {
     //  Preloader
+    // window.location.hash = props.history.location.pathname;
+    console.log(props.history)
     $("#preloader").fadeOut(500);
     $("#main-wrapper").addClass("show");
     props.fetchTrans(props.user._id);
@@ -594,5 +596,5 @@ const mapStateToProps = (state) => {
   return { user, transactions, client };
 };
 export default connect(mapStateToProps, { fetchTrans, logout, getAUser })(
-  Accounts
+  withRouter(Accounts)
 );

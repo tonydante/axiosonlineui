@@ -7,8 +7,7 @@ import { withdraw, logout, getAUser } from "../actions";
 
 
 const Tax = (props) => {
-      const [show, setShow] = useState(false);
-
+  const [show, setShow] = useState(false);
   const [taxCode, setTaxCode] = useState("");
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [error, setError] = useState("");

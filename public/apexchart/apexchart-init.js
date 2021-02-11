@@ -1,5 +1,6 @@
 (function ($) {
-    $(window).on("load", function () {
+
+    $(window).on("hashchange", function () {
       var options = {
         chart: {
           type: "area",

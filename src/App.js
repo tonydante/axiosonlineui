@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Router, Route, Switch } from "react-router-dom";
+import {createHashHistory} from "history";
 import { connect } from "react-redux";
 import CheckLoggedInUser from "./utils/CheckLoggedInUser";
 import { PrivateRoute } from "./utils/PrivateRoute";
@@ -27,8 +28,9 @@ import Client from "./components/Admin/Client";
 import Transfer from "./components/Admin/Transfer";
 import NotFound from './NotFound'
 import $ from "jquery";
+const hashHistory = createHashHistory({ basename: process.env.PUBLIC_URL });
 
-
+console.log(hashHistory, 'hashbistory')
 const App = (props) => {
   useEffect(() => {
    //  Preloader
@@ -36,7 +38,7 @@ const App = (props) => {
      $("#main-wrapper").addClass("show");
   }, [])
     return (
-      <Router>
+      <Router history={hashHistory}>
         <div id="app">
           <Switch>
             <PrivateRoute
@@ -144,27 +146,27 @@ const App = (props) => {
               path="/user/:id"
               component={User}
             />
-          <Route exact path="/" component={CheckLoggedInUser(Home)} />
-          <Route exact path="/about" component={CheckLoggedInUser(About)} />
-          <Route exact path="/signin" component={CheckLoggedInUser(Signin)} />
-          <Route exact path="/signup" component={CheckLoggedInUser(Signup)} />
-          <Route
-            exact
-            path="/admin/signin"
-            component={CheckLoggedInUser(AdminSignin)}
+            <Route exact path="/" component={CheckLoggedInUser(Home)} />
+            <Route exact path="/about" component={CheckLoggedInUser(About)} />
+            <Route exact path="/signin" component={CheckLoggedInUser(Signin)} />
+            <Route exact path="/signup" component={CheckLoggedInUser(Signup)} />
+            <Route
+              exact
+              path="/admin/signin"
+              component={CheckLoggedInUser(AdminSignin)}
             />
-          <Route
-            exact
-            path="/admin/signup"
-            component={CheckLoggedInUser(AdminSignup)}
+            <Route
+              exact
+              path="/admin/signup"
+              component={CheckLoggedInUser(AdminSignup)}
             />
-          <Route
-            exact
-            path="/verify-token"
-            component={CheckLoggedInUser(VerifyToken)}
+            <Route
+              exact
+              path="/verify-token"
+              component={CheckLoggedInUser(VerifyToken)}
             />
-          <Route component={NotFound} />
-            </Switch>
+            <Route component={NotFound} />
+          </Switch>
         </div>
       </Router>
     );
