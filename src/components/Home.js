@@ -33,7 +33,7 @@ const handleMenu = () => {
                       <span>Axos Online</span>
                     </Link>
                     <button
-                      className={`navbar-toggle ${show ? "" : "collapsed"}`}
+                      className={`navbar-toggler ${show ? "" : "collapsed"}`}
                       onClick={handleMenu}
                       type="button"
                       data-toggle="collapse"
@@ -46,17 +46,18 @@ const handleMenu = () => {
 
                     <div
                       class={`navbar-collapse collapse ${show ? "show" : ""}`}
-                      id="navbarSupportedContent"
-                     >
+                      id="navbarSupportedContent">
                       <ul class="navbar-nav">
-                        <li class="nav-item">
-                          <Link to="/signin" className="btn btn-primary">
+                        <li className="nav-item">
+                          <Link to="/signin" className="nav-link">
                             Sign In
                           </Link>
                         </li>
-                        <Link to="./signup" className="btn btn-outline-primary">
-                          Sign Up
-                        </Link>
+                        <li className="nav-item">
+                          <Link to="./signup" className="nav-link">
+                            Sign Up
+                          </Link>
+                        </li>
                       </ul>
                     </div>
                     <div className="dashboard_log">

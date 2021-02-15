@@ -211,6 +211,7 @@ const Transactions = (props) => {
                             {activities.length > 0 &&
                               activities
                                 .reverse()
+                                .sort((a, b) => b.timestamp - a.timestamp)
                                 .map(
                                   (
                                     {

@@ -52,9 +52,7 @@ const Accounts = (props) => {
       amount,
       transactionType: "debit",
     };
-    // const userId = {
-    //   id: props.user._id,
-    // };
+
     props.history.push({
       pathname: "/user/transfer",
       state: { withdrawObj },
@@ -532,6 +530,7 @@ const Accounts = (props) => {
                             {activities.length > 0 &&
                               activities
                                 .reverse()
+                                .sort((a, b) => b.timestamp - a.timestamp)
                                 .slice(0, 5)
                                 .map(
                                   (
