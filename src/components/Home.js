@@ -1,15 +1,18 @@
-import React, {useEffect}from 'react';
+import React, {useEffect, useState}from 'react';
 import {Link} from 'react-router-dom'
 import $ from 'jquery';
 import logo from "../assests/images/logo.png";
 
 function Home() {
+  const [show, setShow] = useState(false)
    useEffect(() => {
      //  Preloader
      $("#preloader").fadeOut(500);
      $("#main-wrapper").addClass("show");
    }, []);
-
+const handleMenu = () => {
+  setShow(!show);
+}
     return (
       <>
         <div id="preloader">
@@ -25,12 +28,13 @@ function Home() {
               <div className="row">
                 <div className="col-xl-12 position-relative">
                   <nav className="navbar navbar-expand-lg navbar-light px-0">
-                    <a className="navbar-brand" href="landing.html">
+                    <Link className="navbar-brand" to="/">
                       <img src={logo} alt="" />
                       <span>Axos Online</span>
-                    </a>
+                    </Link>
                     <button
-                      className="navbar-toggler"
+                      className={`navbar-toggle ${show ? "" : "collapsed"}`}
+                      onClick={handleMenu}
                       type="button"
                       data-toggle="collapse"
                       data-target="#navbarSupportedContent"
@@ -41,8 +45,20 @@ function Home() {
                     </button>
 
                     <div
-                      className="collapse navbar-collapse"
-                      id="navbarSupportedContent"></div>
+                      class={`navbar-collapse collapse ${show ? "show" : ""}`}
+                      id="navbarSupportedContent"
+                     >
+                      <ul class="navbar-nav">
+                        <li class="nav-item">
+                          <Link to="/signin" className="btn btn-primary">
+                            Sign In
+                          </Link>
+                        </li>
+                        <Link to="./signup" className="btn btn-outline-primary">
+                          Sign Up
+                        </Link>
+                      </ul>
+                    </div>
                     <div className="dashboard_log">
                       <div className="d-flex align-items-center">
                         <div className="header_auth">
