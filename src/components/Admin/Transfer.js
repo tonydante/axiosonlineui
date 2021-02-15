@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import $ from "jquery";
+import moment from 'moment';
+import swal from 'sweetalert'
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getAUser, logout, updateUser, transfer } from "../../actions";
@@ -9,6 +11,7 @@ const Transfer = (props) => {
   const [show, setShow] = useState(false);
   const [amount, setAmount] = useState(0);
   const [accNumber, setAccNumber] = useState(0);
+  const [date, setDate] = useState("");
 
   useEffect(() => {
     //  Preloader
@@ -27,10 +30,22 @@ const Transfer = (props) => {
     const transferObj = {
       referenceNo: props.user.accNumber,
       amount,
-      transactionType: "credit"
+      transactionType: "credit",
+      timestamp: moment(date).format("DD MMM, YY h:mm A")
     };
-    console.log(transferObj)
-    props.transfer(props.match.params.id, transferObj, props.history);
+     swal("Are you sure you want to update this?", {
+       buttons: ["Oh noez!", "Aww yiss!"],
+     }).then((update) => {
+       if (update) {
+         props.transfer(props.match.params.id, transferObj, props.history);
+         swal("Poof! user account balance has been updated!", {
+           icon: "success",
+         });
+       } else {
+         swal("No updates were made!");
+       }
+     });
+    
   };
 
   const handleMenu = () => {
@@ -40,6 +55,8 @@ const Transfer = (props) => {
   const logout = () => {
     props.logout();
   };
+
+
   return (
     <>
       <div id="preloader">
@@ -205,6 +222,17 @@ const Transfer = (props) => {
                                 name="amount"
                                 value={amount || ""}
                                 onChange={(e) => setAmount(e.target.value)}
+                              />
+                            </div>
+                            <div className="form-group col-xl-12">
+                              <label className="mr-sm-2">Date</label>
+                              <input
+                                type="text"
+                                className="form-control"
+                                placeholder="eg: 2020-09-08 17:34:53"
+                                name="date"
+                                value={date || ""}
+                                onChange={(e) => setDate(e.target.value)}
                               />
                             </div>
                             <div className="form-group">

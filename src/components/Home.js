@@ -182,10 +182,11 @@ function Home() {
                         <i className="fa fa-map-marker"></i> California, USA
                       </li>
                       <li>
-                        <i className="fa fa-phone"></i> (+880) 1243 665566
+                        <i className="fa fa-phone"></i> 877-303-0448
                       </li>
                       <li>
-                        <i className="fa fa-envelope"></i> hello@example.com
+                        <i className="fa fa-envelope"></i>
+                        contact@axiosonlinecredits.com
                       </li>
                     </ul>
                   </div>
@@ -248,7 +249,6 @@ function Home() {
                       <img src={logo} alt="" />
                     </Link>
                     <Link to="/about">About</Link>
-               
                   </div>
                 </div>
                 <div className="col-xl-6 col-md-6 text-lg-right text-center"></div>

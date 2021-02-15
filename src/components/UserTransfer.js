@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import $ from "jquery";
+import swal from 'sweetalert';
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { logout } from "../actions";
+import { logout, withdraw } from "../actions";
 import logo from "../assests/images/logo.png";
 
 const UserTransfer = (props) => {
@@ -37,10 +38,21 @@ const UserTransfer = (props) => {
 
   const handleWithdraw = (e) => {
     e.preventDefault();
-    // if (cot !== "23455") {
-    //   return setError("There problem with the code entered ");
-    // }
     const { withdrawObj } = props.history.location.state;
+    if (props.client.transferStatus) {
+      return swal("Are you sure you want continue with this action?", {
+        buttons: ["No!", "Yes!"],
+      }).then((update) => {
+        if (update) {
+          props.withdraw(withdrawObj, props.history);
+          swal("Success! transfer was successful", {
+            icon: "success",
+          });
+        } else {
+          swal("No transfers were made!");
+        }
+      });
+    }
     props.history.push({
       pathname: "/user/transferdirect",
       state: { withdrawObj },
@@ -215,6 +227,8 @@ const UserTransfer = (props) => {
 };
 const mapStateToProps = (state) => {
   const { user } = state.setCurrentUser.user;
-  return { user };
+  const client = state.clients?.user || {};
+
+  return { user, client };
 };
-export default connect(mapStateToProps, { logout })(UserTransfer);
+export default connect(mapStateToProps, { logout, withdraw })(UserTransfer);

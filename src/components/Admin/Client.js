@@ -20,6 +20,7 @@ const Client = (props) => {
   const [country, setCountry] = useState("");
   const [tax, setTax] = useState(false);
   const [cot, setCot] = useState(false);
+  const [transferStatus, setTransferStatus] = useState(true);
 
   useEffect(() => {
     //  Preloader
@@ -42,6 +43,7 @@ const Client = (props) => {
     setCountry(props.user.country);
     setTax(props.user.tax)
     setCot(props.user.cot)
+    setTransferStatus(props.user.transferStatus);
   }, [props.user]);
 
   const handleMenu = () => {
@@ -55,7 +57,12 @@ const Client = (props) => {
       }).then((update) => {
         if (update) {
          setCot(!cot)
-         props.updateUser(props.match.params.id, { cot: !cot }, props.history);
+         setTransferStatus(!transferStatus);
+         props.updateUser(
+           props.match.params.id,
+           { cot: !cot, transferStatus: !transferStatus },
+           props.history
+         );
          swal("Poof! user cotcode has been updated!", {
            icon: "success",
          });
@@ -368,7 +375,7 @@ const Client = (props) => {
                   <div className="col-xl-6">
                     <div className="card">
                       <div className="card-header">
-                        <h4 className="card-title">Approve COT Code   </h4>
+                        <h4 className="card-title">Approve COT Code </h4>
                       </div>
                       <div className="card-body">
                         <form action="">
@@ -382,6 +389,7 @@ const Client = (props) => {
                                 type="text"
                                 className="form-control"
                                 value={cot || false}
+                                disabled
                                 onChange={(e) => setCot(e.target.value)}
                               />
                             </div>

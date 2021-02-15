@@ -30,7 +30,6 @@ import NotFound from './NotFound'
 import $ from "jquery";
 const hashHistory = createHashHistory({ basename: process.env.PUBLIC_URL });
 
-console.log(hashHistory, 'hashbistory')
 const App = (props) => {
   useEffect(() => {
    //  Preloader

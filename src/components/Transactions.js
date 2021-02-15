@@ -22,10 +22,11 @@ const Transactions = (props) => {
     setProfile(props.user);
     setActivities(props.transactions);
   }, [props]);
+
   const replaceFirst5 = (str) => {
-    console.log(str, "string");
     return str.replace(/^.{1,5}/, (m) => "*".repeat(m.length + 3));
   };
+
   const handleMenu = () => {
     setShow(!show);
   };
@@ -33,7 +34,6 @@ const Transactions = (props) => {
   const logout = () => {
     props.logout();
   };
-  console.log(activities[activities.length - 1]?.createdAt, 'transactions')
   return (
     <>
       <div id="preloader">
@@ -187,7 +187,9 @@ const Transactions = (props) => {
                       <li>
                         <h5 className="text-danger mr-4">Last Transaction</h5>
                         <span className="text-danger">
-                          {moment(activities[activities.length - 1]?.createdAt).format("DD MMM, YY h:mm A")}
+                          {moment(
+                            activities[activities.length - 1]?.createdAt
+                          ).format("DD MMM, YY h:mm A")}
                         </span>
                       </li>
                     </ul>
@@ -207,52 +209,51 @@ const Transactions = (props) => {
                         <table className="table mb-0 table-responsive-sm">
                           <tbody>
                             {activities.length > 0 &&
-                              activities.map(
-                                (
-                                  {
-                                    transactionType,
-                                    amount,
-                                    referenceNo,
-                                    createdAt,
-                                  },
-                                  index
-                                ) => (
-                                  <tr key={index}>
-                                    <td>
-                                      <span
-                                        className={
-                                          transactionType === "credit"
-                                            ? "buy-thumb"
-                                            : "sold-thumb"
-                                        }>
-                                        <i
+                              activities
+                                .reverse()
+                                .map(
+                                  (
+                                    {
+                                      transactionType,
+                                      amount,
+                                      referenceNo,
+                                      timestamp,
+                                    },
+                                    index
+                                  ) => (
+                                    <tr key={index}>
+                                      <td>
+                                        <span
                                           className={
                                             transactionType === "credit"
-                                              ? "la la-arrow-up"
-                                              : "la la-arrow-down"
-                                          }></i>
-                                      </span>
-                                    </td>
-                                    <td>
-                                      {transactionType.toUpperCase()}
-                                    </td>
-                                    <td>
-                                      Using - Bank {replaceFirst5(referenceNo)}
-                                    </td>
-                                    <td
-                                      className={
-                                        transactionType === "credit"
-                                          ? "text-success"
-                                          : "text-danger"
-                                      }>
-                                      {moment(createdAt).format(
-                                        "DD MMM, YY h:mm A"
-                                      )}
-                                    </td>
-                                    <td>{amount}</td>
-                                  </tr>
-                                )
-                              )}
+                                              ? "buy-thumb"
+                                              : "sold-thumb"
+                                          }>
+                                          <i
+                                            className={
+                                              transactionType === "credit"
+                                                ? "la la-arrow-up"
+                                                : "la la-arrow-down"
+                                            }></i>
+                                        </span>
+                                      </td>
+                                      <td>{transactionType.toUpperCase()}</td>
+                                      <td>
+                                        Using - Bank{" "}
+                                        {replaceFirst5(referenceNo)}
+                                      </td>
+                                      <td
+                                        className={
+                                          transactionType === "credit"
+                                            ? "text-success"
+                                            : "text-danger"
+                                        }>
+                                        {timestamp}
+                                      </td>
+                                      <td>{amount}</td>
+                                    </tr>
+                                  )
+                                )}
                           </tbody>
                         </table>
                       </div>

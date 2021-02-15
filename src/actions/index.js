@@ -133,11 +133,9 @@ export function verifyUser(userData) {
     axios
       .patch(`${API}/v1/admin/users/verify`, userData)
       .then(({ data }) => {
-        console.log(data, 'response')
         dispatch(verifyUserSuccess(data.updatedUser));
       })
       .catch((err) => {
-        console.log(err, 'error')
         dispatch(verifyUserError(err.response.data));
       });
 }
@@ -182,7 +180,6 @@ const getUserError = data =>
 export const getAUser = id => dispatch => {
   axios.get(`${API}/v1/user/${id}`)
     .then((response) => {
-      console.log(response, 'res')
       dispatch(getUserSuccess(response.data.user));
     })
     .catch((error) => {
@@ -268,7 +265,6 @@ export const fetchTrans = id => dispatch => {
       dispatch(fetchTransSuccess(response.data.transactions.transactions));
     })
     .catch((error) => {
-      console.log(error)
       dispatch(fetchTransError(error.response.data));
     });
 }

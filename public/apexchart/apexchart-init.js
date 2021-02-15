@@ -1,5 +1,4 @@
 (function ($) {
-
     $(window).on("hashchange", function () {
       var options = {
         chart: {

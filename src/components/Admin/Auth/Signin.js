@@ -54,7 +54,6 @@ function AdminSignin(props) {
           : props.history.push("/user/dashboard");
       })
       .catch((err) => {
-        console.log(err.response, 'error')
         swal({
           title: err.response.data.message,
           icon: "warning",

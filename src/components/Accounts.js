@@ -20,7 +20,6 @@ const Accounts = (props) => {
   useEffect(() => {
     //  Preloader
     // window.location.hash = props.history.location.pathname;
-    console.log(props.history)
     $("#preloader").fadeOut(500);
     $("#main-wrapper").addClass("show");
     props.fetchTrans(props.user._id);
@@ -71,6 +70,7 @@ const Accounts = (props) => {
   const logout = () => {
     props.logout();
   };
+
   return (
     <>
       <div id="preloader">
@@ -531,6 +531,7 @@ const Accounts = (props) => {
                           <ul className="list-unstyled">
                             {activities.length > 0 &&
                               activities
+                                .reverse()
                                 .slice(0, 5)
                                 .map(
                                   (
@@ -538,7 +539,7 @@ const Accounts = (props) => {
                                       transactionType,
                                       amount,
                                       referenceNo,
-                                      createdAt,
+                                      timestamp,
                                     },
                                     index
                                   ) => (
@@ -558,11 +559,7 @@ const Accounts = (props) => {
                                       </span>
                                       <div className="media-body">
                                         <p>
-                                          <small>
-                                            {moment(createdAt).format(
-                                              "DD MMM, YY h:mm A"
-                                            )}
-                                          </small>
+                                          <small>{timestamp}</small>
                                         </p>
                                         <p className="wallet-address text-dark">
                                           {replaceFirst5(referenceNo)}

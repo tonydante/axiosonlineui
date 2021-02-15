@@ -216,7 +216,6 @@ const Clients = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  // console.log(state);
   const admin = state.setCurrentUser.user.user;
   const users = state.clients?.clients || [];
   return { admin, users };

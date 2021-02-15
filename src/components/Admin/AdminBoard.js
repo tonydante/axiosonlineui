@@ -23,7 +23,6 @@ const AdminBoard = (props) => {
     setActivities(props.transactions);
   }, [props]);
   const replaceFirst5 = (str) => {
-      console.log(str, 'string')
     return str.replace(/^.{1,5}/, (m) => "*".repeat(m.length + 3));
   };
   const handleMenu = () => {
