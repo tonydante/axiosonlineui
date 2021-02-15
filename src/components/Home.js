@@ -47,7 +47,7 @@ const handleMenu = () => {
                     <div
                       class={`navbar-collapse collapse ${show ? "show" : ""}`}
                       id="navbarSupportedContent">
-                      <ul class="navbar-nav">
+                      <ul className={!show ? "desktop" : "navbar-nav"}>
                         <li className="nav-item">
                           <Link to="/signin" className="nav-link">
                             Sign In

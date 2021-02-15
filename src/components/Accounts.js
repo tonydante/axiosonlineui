@@ -529,7 +529,6 @@ const Accounts = (props) => {
                           <ul className="list-unstyled">
                             {activities.length > 0 &&
                               activities
-                                .reverse()
                                 .sort((a, b) => b.timestamp - a.timestamp)
                                 .slice(0, 5)
                                 .map(
